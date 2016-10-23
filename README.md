@@ -20,9 +20,23 @@ Or install it yourself as:
 
     $ gem install fluent-plugin-genhashvalue
 
-## Usage
 
-TODO: Write usage instructions here
+## Configuration
+
+Example:
+
+    <filter foo.**>
+      type genhashvalue
+
+      keys type,descr
+      hash_type md5
+      base64_enc true
+      set_key _hash
+      separator _
+      inc_time_as_key true
+      inc_tag_as_key false
+    </filter>
+
 
 ## Development
 
