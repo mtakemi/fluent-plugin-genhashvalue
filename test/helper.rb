@@ -22,7 +22,7 @@ unless ENV.has_key?('VERBOSE')
   $log = nulllogger
 end
 
-require 'fluent/plugin/out_genhashvalue'
+require 'fluent/plugin/filter_genhashvalue'
 
 class Test::Unit::TestCase
 end
