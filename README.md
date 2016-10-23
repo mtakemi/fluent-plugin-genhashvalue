@@ -38,6 +38,19 @@ Example:
     </filter>
 
 
+Input:
+
+    root@112133c12ee3:~/fluentd# echo '{"type":"log","descr":"description..."}' | ./bin/fluent-cat foo.test
+    root@112133c12ee3:~/fluentd# echo '{"type":"log","descr":"description..."}' | ./bin/fluent-cat foo.test
+    root@112133c12ee3:~/fluentd# echo '{"type":"log","descr":"description..."}' | ./bin/fluent-cat foo.test
+
+Filterd:
+
+    2016-10-23 15:06:05 +0000 foo.test: {"type":"log","descr":"description...","_hash":"/B3pc4NBk6Z9Ph89k+ZL4Q=="}
+    2016-10-23 15:06:22 +0000 foo.test: {"type":"log","descr":"description...","_hash":"IgB25wc3M0QJfk0KteYygQ=="}
+    2016-10-23 15:06:37 +0000 foo.test: {"type":"log","descr":"description...","_hash":"vvDF6eWyX5Sc01AVw8P6Cw=="}
+
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
