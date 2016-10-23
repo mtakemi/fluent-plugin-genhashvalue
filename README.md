@@ -29,7 +29,7 @@ Example:
       type genhashvalue
 
       keys type,descr
-      hash_type md5
+      hash_type md5    # md5/sha1/sha256/sha512
       base64_enc true
       set_key _hash
       separator _
