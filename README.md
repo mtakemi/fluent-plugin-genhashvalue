@@ -1,8 +1,7 @@
 # Fluent::Plugin::GenHashValue
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/fluent/plugin/genhashvalue`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+fluentd filter plugin.
+generage hash(md5/sha1/sha256/sha512) value
 
 ## Installation
 
@@ -31,6 +30,7 @@ Example:
       keys type,descr
       hash_type md5    # md5/sha1/sha256/sha512
       base64_enc true
+      base91_enc false
       set_key _hash
       separator _
       inc_time_as_key true

@@ -11,10 +11,12 @@ module Fluent
     config_param :separator, :string, :default => '_'
     config_param :hash_type, :string, :default => 'sha256'
     config_param :base64_enc, :bool, :default => false
+    config_param :base91_enc, :bool, :default => false
 
     def initialize
       super
       require 'base64'
+      require 'base91'
     end
 
     def configure(conf)
@@ -38,8 +40,8 @@ module Fluent
       s += time.to_s + separator if inc_time_as_key
 
       s += keys.map {|k| record[k]}.join(separator)
-      if base64_enc then
-        record[set_key] = hash_b64(hash_type, s)
+      if base64_enc || base91_enc then
+        record[set_key] = hash_enc(hash_type, s)
       else
         record[set_key] = hash_hex(hash_type, s)
       end
@@ -59,7 +61,7 @@ module Fluent
       end
     end
 
-    def hash_b64(type, str)
+    def hash_enc(type, str)
       case type
       when 'md5'
         h = Digest::MD5.digest(str)
@@ -70,7 +72,11 @@ module Fluent
       when 'sha512'
         h = Digest::SHA512.digest(str)
       end
-      h = Base64::strict_encode64(h)
+      if base64_enc then
+        h = Base64::strict_encode64(h)
+      elsif base91_enc then
+        h = Base91::encode(h)
+      end
     end
   end
 end

@@ -71,6 +71,16 @@ class GenHashValueFilterTest < Test::Unit::TestCase
     filtered = d.filtered_as_array
     assert_equal 1, filtered[0][2]['id']
     assert_equal "lGZvHG7N4VoYKooWW9nCoA==", filtered[0][2]['_id']
+
+    d.instance.base64_enc = false
+    d.instance.base91_enc = true
+
+    d.run do
+      d.emit({"id"=>1, "time"=>time, "v"=>"日本語", "k"=>"値"}, time)
+    end
+    filtered = d.filtered_as_array
+    assert_equal 1, filtered[0][2]['id']
+    assert_equal "VT.Jo=nV~PT7k<Cg=K`T", filtered[0][2]['_id']
   end
 
   def test_sha1
@@ -103,6 +113,16 @@ class GenHashValueFilterTest < Test::Unit::TestCase
     filtered = d.filtered_as_array
     assert_equal 1, filtered[0][2]['id']
     assert_equal "BLNIkoOMUNfgWy16xHFIXgIyMoI=", filtered[0][2]['_id']
+
+    d.instance.base64_enc = false
+    d.instance.base91_enc = true
+
+    d.run do
+      d.emit({"id"=>1, "time"=>time, "v"=>"日本語", "k"=>"値"}, time)
+    end
+    filtered = d.filtered_as_array
+    assert_equal 1, filtered[0][2]['id']
+    assert_equal "t1mz#vxE?]UntYN+)Xb1PjgMM", filtered[0][2]['_id']
   end
 
   def test_sha256
@@ -135,6 +155,16 @@ class GenHashValueFilterTest < Test::Unit::TestCase
     filtered = d.filtered_as_array
     assert_equal 1, filtered[0][2]['id']
     assert_equal "+vU8HJzInolrgS+QrHetBER/rs6e/2y/YpdcYYxf+x8=", filtered[0][2]['_id']
+
+    d.instance.base64_enc = false
+    d.instance.base91_enc = true
+
+    d.run do
+      d.emit({"id"=>1, "time"=>time, "v"=>"日本語", "k"=>"値"}, time)
+    end
+    filtered = d.filtered_as_array
+    assert_equal 1, filtered[0][2]['id']
+    assert_equal "q(gFR&W^=@/E3Y~^urp\"|~B\"B\"B\"B\"B\"B\"B\"B\"B\"\"\"", filtered[0][2]['_id']
   end
 
   def test_sha512
@@ -176,5 +206,17 @@ class GenHashValueFilterTest < Test::Unit::TestCase
     end
     filtered = d.filtered_as_array
     assert_equal Digest::SHA512::hexdigest(time2.to_s), filtered[0][2]['_id']
+
+    d.instance.base64_enc = false
+    d.instance.base91_enc = true
+    d.instance.keys = ['id', 'time', 'v', 'k']
+
+    d.run do
+      d.emit({"id"=>1, "time"=>time, "v"=>"日本語", "k"=>"値"}, time)
+    end
+    filtered = d.filtered_as_array
+    assert_equal 1, filtered[0][2]['id']
+    assert_equal "J+go,3[a^sfK`hA\"/C1~)CZ3Mvj%X}J@M1Nbz4cmm4q[ks,Mj2u}NeKsQ_WOL<RWkWNu|*G^u6h_x]f", filtered[0][2]['_id']
+
   end
 end
