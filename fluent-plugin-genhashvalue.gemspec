@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["m.takemi"]
   spec.email         = ["m.takemi@gmail.com"]
 
-  spec.summary       = %q{generage hash value}
-  spec.description   = %q{generage hash(md5/sha1/sha256/sha512) value}
-  spec.homepage      = "https://qos.dev7.net/~masafumi."
+  spec.summary       = %q{generate hash value}
+  spec.description   = %q{generate hash(md5/sha1/sha256/sha512) value}
+  spec.homepage      = "https://qos.dev7.net/~masafumi/"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
