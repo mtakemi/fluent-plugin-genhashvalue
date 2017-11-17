@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "fluent-plugin-genhashvalue"
-  spec.version       = "0.04"
+  spec.version       = "0.05"
   spec.authors       = ["m.takemi"]
   spec.email         = ["m.takemi@gmail.com"]
 
