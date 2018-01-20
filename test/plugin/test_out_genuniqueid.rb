@@ -52,7 +52,7 @@ class GenHashValueFilterTest < Test::Unit::TestCase
   def test_md5(data)
     d = create_driver(%[
       keys id, time, v, k
-      hash_type md5 # md5 or sha1 or sha256 or sha512
+      hash_type md5 # md5 or sha1 or sha256 or sha512 or mur128
       base64_enc "#{data["base64_enc"]}"
       base91_enc "#{data["base91_enc"]}"
       set_key _id
@@ -87,7 +87,7 @@ class GenHashValueFilterTest < Test::Unit::TestCase
   def test_sha1(data)
     d = create_driver(%[
       keys id, time, v, k
-      hash_type sha1 # md5 or sha1 or sha256 or sha512
+      hash_type sha1 # md5 or sha1 or sha256 or sha512 or mur128
       base64_enc "#{data["base64_enc"]}"
       base91_enc "#{data["base91_enc"]}"
       set_key _id
@@ -121,7 +121,7 @@ class GenHashValueFilterTest < Test::Unit::TestCase
   def test_sha256(data)
     d = create_driver(%[
       keys id, time, v, k
-      hash_type sha256 # md5 or sha1 or sha256 or sha512
+      hash_type sha256 # md5 or sha1 or sha256 or sha512 or mur128
       base64_enc "#{data["base64_enc"]}"
       base91_enc "#{data["base91_enc"]}"
       set_key _id
@@ -155,7 +155,41 @@ class GenHashValueFilterTest < Test::Unit::TestCase
   def test_sha512(data)
     d = create_driver(%[
       keys id, time, v, k
-      hash_type sha512 # md5 or sha1 or sha256 or sha512
+      hash_type sha512 # md5 or sha1 or sha256 or sha512 or mur128
+      base64_enc "#{data["base64_enc"]}"
+      base91_enc "#{data["base91_enc"]}"
+      set_key _id
+      separator ,
+      inc_time_as_key false
+      inc_tag_as_key false
+    ])
+    time = event_time("2016-10-23 13:14:15 UTC")
+    time2 = event_time
+
+    d.run(default_tag: 'test') do
+      d.feed(time, {"id"=>1, "time"=>time, "time2"=>time2, "v"=>"日本語", "k"=>"値"})
+    end
+
+    # ### FileOutput#write returns path
+    filtered = d.filtered
+    assert_equal 1, filtered[0][1]['id']
+    assert_equal data["expected"], filtered[0][1]['_id']
+  end
+
+  data("base" => {"base64_enc" => false,
+                  "base91_enc" => false,
+                  "expected" =>"c283c0806dc63da6f66eda61a044537c"},
+       "base64_enc" => {"base64_enc" => true,
+                        "base91_enc" => false,
+                        "expected" => "woPAgG3GPab2btphoERTfA=="},
+       "base91_enc" => {"base64_enc" => false,
+                        "base91_enc" => true,
+			"expected" => "1KU!R=v=s`F&[U3?S2_K"}
+       )
+  def test_mur128(data)
+    d = create_driver(%[
+      keys id, time, v, k
+      hash_type mur128 # md5 or sha1 or sha256 or sha512 or mur128
       base64_enc "#{data["base64_enc"]}"
       base91_enc "#{data["base91_enc"]}"
       set_key _id
@@ -176,3 +210,4 @@ class GenHashValueFilterTest < Test::Unit::TestCase
     assert_equal data["expected"], filtered[0][1]['_id']
   end
 end
+
