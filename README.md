@@ -28,7 +28,7 @@ Example:
       type genhashvalue
 
       keys type,descr
-      hash_type md5    # md5/sha1/sha256/sha512
+      hash_type md5    # md5/sha1/sha256/sha512/mur128
       base64_enc true
       base91_enc false
       set_key _hash
@@ -65,4 +65,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-

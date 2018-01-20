@@ -1,8 +1,11 @@
 require 'fluent/plugin/filter'
+require 'murmurhash3'
 
 module Fluent::Plugin
   class GenHashValueFilter < Filter
     Fluent::Plugin.register_filter('genhashvalue', self)
+
+    include MurmurHash3::V128
 
     config_param :keys, :array
     config_param :set_key, :string, :default => '_hash'
@@ -58,6 +61,8 @@ module Fluent::Plugin
         h = Digest::SHA256.hexdigest(str)
       when 'sha512'
         h = Digest::SHA512.hexdigest(str)
+      when 'mur128'
+        h = MurmurHash3::V128.str_hexdigest(str)
       end
     end
 
@@ -71,6 +76,8 @@ module Fluent::Plugin
         h = Digest::SHA256.digest(str)
       when 'sha512'
         h = Digest::SHA512.digest(str)
+      when 'mur128'
+        h = MurmurHash3::V128.str_digest(str)
       end
       if base64_enc then
         h = Base64::strict_encode64(h)
