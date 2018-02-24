@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "fluent-plugin-genhashvalue"
-  spec.version       = "1.0"
+  spec.version       = "1.1"
   spec.authors       = ["m.takemi"]
   spec.email         = ["m.takemi@gmail.com"]
 
@@ -25,4 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_runtime_dependency "fluentd", [">= 0.14.0", "< 2"]
   spec.add_runtime_dependency "base91", '>= 0.0.1'
+  spec.add_runtime_dependency "murmurhash3", '>= 0.1.6'
 end

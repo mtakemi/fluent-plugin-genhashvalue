@@ -1,7 +1,7 @@
 # Fluent::Plugin::GenHashValue
 
 fluentd filter plugin.
-generate hash(md5/sha1/sha256/sha512) value
+generate hash(md5/sha1/sha256/sha512/mur128) value
 
 ## Installation
 
